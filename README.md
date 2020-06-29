@@ -1,5 +1,10 @@
 # queue-management
 
+![CI-Jest](https://github.com/sniperadmin/qms-nuxt-ts/workflows/CI-Jest/badge.svg)
+![Coverage-Monitor](https://github.com/sniperadmin/qms-nuxt-ts/workflows/Coverage-Monitor/badge.svg)
+
+This project is a POC for a queue management system
+
 ## Build Setup
 
 ```bash
