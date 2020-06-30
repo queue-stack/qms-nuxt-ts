@@ -52,16 +52,28 @@ describe("QmsInput", () => {
     expect(label.text()).toBe("test label")
   })
 
-  test("should load input  string value", async () => {
+  test("should load input value", async () => {
     const input = wrapper.find("v-text-field-stub")
-    wrapper.setProps({ value: "test value", })
-
+    wrapper.setProps({ value: null, })
+    
     await wrapper.vm.$nextTick()
 
     expect(input.exists()).toBe(true)
-    expect(input.attributes().value).toBe("test value")
-    expect(wrapper.vm.$props.value.type).toBe(undefined)
+    expect(!wrapper.vm.$props.value).toBeTruthy()
   })
+
+  test('should test textarea', async () => {
+    wrapper.setProps({ textArea: true })
+    await wrapper.vm.$nextTick()
+
+    const textarea = wrapper.find('v-textarea-stub')
+    if (wrapper.vm.$props.textArea === true) {
+      expect(textarea.exists()).toBe(true)
+    } else {
+      expect(textarea.exists()).toBe(false)
+    }
+  })
+
   test("should test true added attrs into input", () => {
     const input = wrapper.find("v-text-field-stub")
     expect(input.attributes().outlined).toBe("true")
@@ -80,7 +92,7 @@ describe("QmsInput", () => {
 describe("testing input reusability", () => {
   Vue.use(Vuetify)
   const comp = {
-    template: "<qms-input :hide-details='false' :rules='[rules]' label='label' />",
+    template: "<qms-input :value='value' :hide-details='false' :rules='[rules]' label='label' />",
     components: { "qms-input": QmsInput, },
   }
   const validator = () => false
@@ -90,17 +102,25 @@ describe("testing input reusability", () => {
     data () {
       return {
         rules: validator,
+        value:null
       }
     },
   })
 
-  test("should load component", () => {
+  test("should load component", async () => {
     const input = wrapper.find(".v-input")
     const label = wrapper.find(".v-label")
     const messages = wrapper.find(".v-messages__wrapper")
 
     expect(label.exists()).toBe(true)
     expect(messages.exists()).toBe(true)
+
+    expect(input.attributes().value).toBe(undefined)
+
+    wrapper.vm.$data.value = '10'
+
+    await wrapper.vm.$nextTick()
+    console.log(input.attributes().value)
   })
 
   test("should load the rules", () => {
