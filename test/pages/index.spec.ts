@@ -1,22 +1,42 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
+import Vuex, { Store } from 'vuex'
+import { VuexModule, getModule } from 'vuex-module-decorators'
+import Counter from '@/store/counter'
+import { counterStore } from '@/store'
 import index from '@/pages/index.vue'
+
+let wrapper: any
 
 describe('index', () => {
   const localVue = createLocalVue()
   Vue.use(Vuetify)
-  
+
   const vuetify = new Vuetify({})
 
-  const wrapper = shallowMount(index, {
-    localVue,
-    vuetify
+  Vue.use(Vuex)
+
+  
+  beforeEach(() => {
+    let store: Store<any> = new Vuex.Store({})
+    const module = getModule(Counter, store)
+    
+    wrapper = shallowMount(index, {
+      localVue,
+      vuetify,
+      store
+    })    
   })
+
+  afterEach(() => {
+    wrapper.destroy()
+  })
+
+
+
   test('is a Vue instance with matching title', () => {
-    const title = wrapper.find('v-card-title-stub')
     expect(wrapper.vm).toBeTruthy()
-    expect(title.text()).toContain('Welcome to the Vuetify')
   })
 
   
