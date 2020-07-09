@@ -41,9 +41,8 @@
               <qms-input
                 v-model="user.username"
                 :rules="[
-                  rules.required,
-                  (v) => v.length > 2 || 'username must be with a minimum of 3 characters']"
-                @enter="loginUser"
+                  
+                ]"
                 label="Username"
                 label-for="username"
                 type="text"
@@ -53,11 +52,8 @@
               <qms-input
                 v-model.trim="user.password"
                 :rules="[
-                  rules.required,
-                  rules.password.minchars,
-                  rules.password.hasNumber
+                  
                 ]"
-                @enter="loginUser"
                 label="Password"
                 label-for="password"
                 type="password"
@@ -69,8 +65,6 @@
             <v-spacer />
 
             <v-btn
-              @click.enter="loginUser"
-              @keyup.enter="loginUser"
               :disabled="!valid"
               color="primary"
               class="mb-3"
@@ -109,14 +103,14 @@
 import { mapActions, mapGetters } from 'vuex'
 import QmsCard from '../components/QmsCard.vue'
 import QmsInput from '../components/QmsInput.vue'
-import formRules from '@/mixins/formRules'
+// import formRules from '@/mixins/formRules'
 
 import { Vue, Component } from 'nuxt-property-decorator'
 
 @Component({
   components: { QmsInput, QmsCard },
 })
-export default class Inspire extends formRules {
+export default class Login extends Vue {
   valid: boolean = true
 
   user: object ={

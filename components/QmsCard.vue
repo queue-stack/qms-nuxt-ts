@@ -11,6 +11,7 @@
       class="profile-header d-flex justify-space-between"
     >
       <v-container fluid>
+        <v-icon v-if="icon" left>mdi-{{ icon }}</v-icon>
         {{ title }}
         <slot name="custom-title" />
       </v-container>
@@ -18,6 +19,7 @@
         <slot name="header-actions" />
       </v-card>
     </v-flex>
+    <v-divider></v-divider>
     <slot />
   </v-card>
 </template>
@@ -30,6 +32,10 @@ import { Vue, Component } from "nuxt-property-decorator"
     noTitle: {
       type: Boolean,
       default: false,
+    },
+    icon: {
+      type: String,
+      default: null
     },
     title: {
       type: String,
@@ -62,8 +68,8 @@ export default class QmsCard extends Vue {}
 
 <style scoped>
 .profile-header {
-    background-color: #fafafa !important;
-    color: #20407d !important;
+    /* background-color: #fafafa !important; */
+    /* color: #20407d !important; */
     font-size: 18px !important;
     font-weight: 500 !important;
 }

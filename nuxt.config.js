@@ -37,6 +37,7 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
+    { src: '@/plugins/qr-code' }
   ],
   /*
   ** Auto import components
@@ -94,6 +95,9 @@ export default {
         }
       }
     }
+  },
+  server: {
+    host: '0.0.0.0'
   },
   /*
   ** Build configuration
