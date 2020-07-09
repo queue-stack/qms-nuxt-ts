@@ -1,96 +1,82 @@
 <template>
-  <v-layout
-    column
-    justify-center
-    align-center
-  >
-    <v-flex
-      xs12
-      sm8
-      md6
-    >
+    <v-container fluid>
       <div class="text-center">
         <logo />
         <vuetify-logo />
       </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-          <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation
-            </a>.
-          </p>
-          <p>
-            If you have questions, please join the official <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord
-            </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board
-            </a>.
-          </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt Documentation
-          </a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/inspire"
-          >
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-  </v-layout>
+      <v-row>
+        <v-col
+          v-for="item in dashCards"
+          :key="item.title"
+          :cols="$vuetify.breakpoint.xsOnly ? 12 : 3"
+        >
+          <QmsDashCard
+            :title="item.title"
+            :icon="item.icon"
+            :routeName="item.routeName"
+          />
+        </v-col>
+      </v-row>
+    </v-container>
 </template>
 
-<script>
+<script lang="ts">
+import QmsDashCard from '../components/dashboard/QmsDashCard.vue'
 import { Logo, VuetifyLogo } from '~/components'
+import { Vue, Component, namespace } from 'nuxt-property-decorator'
+import { counterStore } from '@/store'
 
-export default {
+// const counter = namespace('counter') // if using namespace
+
+@Component({
   components: {
     Logo,
-    VuetifyLogo
+    VuetifyLogo,
+    QmsDashCard
   }
+})
+export default class Index extends Vue {
+  private dashCards: object[] = [
+    {
+      title: 'Agent Access',
+      icon: 'face-agent',
+      routeName: 'staff'
+    },
+    {
+      title: 'Waiting Area Screen',
+      icon: 'monitor',
+      routeName: 'waiting'
+    },
+    {
+      title: 'Client Access',
+      icon: 'room-service',
+      routeName: 'client'
+    },
+    {
+      title: 'Admin',
+      icon: 'monitor-dashboard',
+      routeName: 'admin'
+    },
+  ]
+  
+  
+  // get testMethod() {
+  //   return counterStore.getCounter
+  // }
+
+  // if using namespace:
+
+  // @counter.Action
+  // increment!: () => void
+  //  => this is equivalent to ...mapActions in computed prop
+
+  // @counter.Mutation
+  // INCREMENT_COUNTER!: () => void
+    //  => this is equivalent to ...mapMutations in computed prop
+
+  // if not using namespace:
+  // private increment() {
+  //   return counterStore.increment()
+  // }
 }
 </script>

@@ -4,3 +4,5 @@ declare module "*.vue" {
 }
 
 declare module "jsdom-global"
+
+declare module '@chenfengyuan/vue-qrcode'
